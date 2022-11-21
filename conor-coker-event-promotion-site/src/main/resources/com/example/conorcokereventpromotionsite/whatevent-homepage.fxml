@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.conorcokereventpromotionsite.WhatEventHomepageController">
+   <children>
+      <SplitPane dividerPositions="0.6936383928571429" prefHeight="68.0" prefWidth="600.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <ChoiceBox fx:id="eventCategoryChoiceBox" layoutX="86.0" layoutY="25.0" prefHeight="11.0" prefWidth="100.0" />
+                  <Text layoutX="14.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What Event Ireland" wrappingWidth="244.20702362060547">
+                     <font>
+                        <Font name="Elephant" size="18.0" />
+                     </font>
+                  </Text>
+                  <ChoiceBox fx:id="eventLocationChoiceBox" layoutX="263.0" layoutY="25.0" prefHeight="11.0" prefWidth="100.0" />
+                  <Text layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event Category" />
+                  <Text layoutX="186.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event Location" />
+                  <Label fx:id="labelNumOfOrganisers" layoutX="219.0" layoutY="6.0" prefHeight="15.0" prefWidth="219.0">
+                     <font>
+                        <Font name="Elephant" size="10.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="368.0" layoutY="29.0" mnemonicParsing="false" onAction="#buttonFindOnClick" prefHeight="15.0" prefWidth="40.0" text="Find" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Button fx:id="registerButton" layoutX="23.0" layoutY="20.0" mnemonicParsing="false" onAction="#registerButtonOnClick" text="Register" />
+                  <Button fx:id="loginButton" layoutX="99.0" layoutY="20.0" mnemonicParsing="false" onAction="#loginButtonOnClick" prefHeight="25.0" prefWidth="59.0" text="Login" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+      <TextArea fx:id="showEventsTextArea" layoutY="68.0" prefHeight="332.0" prefWidth="600.0">
+         <font>
+            <Font name="Elephant" size="12.0" />
+         </font></TextArea>
+   </children>
+</AnchorPane>
