@@ -1,10 +1,10 @@
 package com.example.conorcokereventpromotionsite;
 
-import java.util.Calendar;
-import java.util.Date;
+import javafx.scene.image.Image;
+
 import java.util.Random;
 
-public class Event{
+public class Event {
 
     private String title;
     private String description;
@@ -14,17 +14,18 @@ public class Event{
     private String price;
     private final Organiser organiser;
     private int eventId;
-    private final Calendar calendar = Calendar.getInstance();
-    String date;
+    private String date;
+    private Image image;
 
-    public Event(Organiser organiser, String title, String description, String venue, String price,String date) {
+
+    public Event(Organiser organiser, String title, String description, String venue, String price, String date) {
 
         this.organiser = organiser;
         this.title = title;
         this.description = description;
         this.venue = venue;
         this.price = price;
-        this.date=date;
+        this.date = date;
         Random random = new Random();
         do {
             eventId = random.nextInt(200) + 2000;
@@ -103,14 +104,25 @@ public class Event{
 
         boolean isUnique = true;
 
-        for (Event event:WhatEventApp.getEvents()) {
+        for (Event event : WhatEventApp.getEvents()) {
 
             if (eventId != event.getEventId()) {
                 continue;
             }
-            isUnique=false;
+            isUnique = false;
         }
         return isUnique;
+    }
+
+    public void setImage(Image image) {
+
+        this.image = image;
+
+
+    }
+
+    public Image getImage() {
+        return image;
     }
 
     @Override
@@ -122,7 +134,7 @@ public class Event{
                 "Location - " + location + " \n" +
                 "Venue - " + venue + " \n" +
                 "Price - €" + price + " \n" +
-                "Date - "+ date + "\n" +
+                "Date - " + date + "\n" +
                 "Organised by - " + organiser.getName();
     }
 }

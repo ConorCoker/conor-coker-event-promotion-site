@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,24 +34,21 @@ public class WhatEventHomepageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        ObservableList<String> areas = FXCollections.observableArrayList("Any Area", "Waterford", "Kilkenny", "Galway", "Dublin","Limerick");
+        ObservableList<String> areas = FXCollections.observableArrayList("Any Area", "Waterford", "Kilkenny", "Galway", "Dublin", "Limerick");
         eventLocationChoiceBox.setItems(areas);
         eventLocationChoiceBox.setValue("Any Area");
 
-        ObservableList<String> types = FXCollections.observableArrayList("Any Category", "Music", "Drama", "Poetry", "Comedy","Entertainment","Educational");
+        ObservableList<String> types = FXCollections.observableArrayList("Any Category", "Music", "Drama", "Poetry", "Comedy", "Entertainment", "Educational");
         eventCategoryChoiceBox.setItems(types);
         eventCategoryChoiceBox.setValue("Any Category");
 
         labelNumOfOrganisers.setText("Number of Organisers Registered = " + RegistrationPageController.getNumberOfUsers());
 
-        if (WhatEventApp.getEvents().isEmpty()){
+        if (WhatEventApp.getEvents().isEmpty()) {
             showEventsTextArea.setText(utils.getWelcomeText());
-        }
-        else{
+        } else {
             showEventsTextArea.setText(generateStringToOutput(WhatEventApp.getEvents()));
         }
-
-
 
 
     }
@@ -75,9 +73,9 @@ public class WhatEventHomepageController implements Initializable {
             showEventsTextArea.setText(generateStringToOutput(filterEventsByLocation(eventLocationChoiceBox.getValue())));
         } else if (!eventCategoryChoiceBox.getValue().equals("Any Category") && eventLocationChoiceBox.getValue().equals("Any Area")) {
             showEventsTextArea.setText(generateStringToOutput(filterEventsByCategory(eventCategoryChoiceBox.getValue())));
-        } else if (!eventLocationChoiceBox.getValue().equals("Any Area") && !eventCategoryChoiceBox.getValue().equals("Any Category")){
-            showEventsTextArea.setText(generateStringToOutput(filterEventsByCategoryAndLocation(eventCategoryChoiceBox.getValue(),eventLocationChoiceBox.getValue())));
-        }else{
+        } else if (!eventLocationChoiceBox.getValue().equals("Any Area") && !eventCategoryChoiceBox.getValue().equals("Any Category")) {
+            showEventsTextArea.setText(generateStringToOutput(filterEventsByCategoryAndLocation(eventCategoryChoiceBox.getValue(), eventLocationChoiceBox.getValue())));
+        } else {
             showEventsTextArea.setText(generateStringToOutput(WhatEventApp.getEvents()));
         }
     }
@@ -88,7 +86,7 @@ public class WhatEventHomepageController implements Initializable {
 
         for (Event event : WhatEventApp.getEvents()) {
 
-            if (event.getType().equals(category) && event.getLocation().equals(location)){
+            if (event.getType().equals(category) && event.getLocation().equals(location)) {
                 eventsMatchingFilter.add(event);
             }
 
@@ -103,7 +101,7 @@ public class WhatEventHomepageController implements Initializable {
 
         for (Event event : WhatEventApp.getEvents()) {
 
-            if (event.getType().equals(category)){
+            if (event.getType().equals(category)) {
                 eventsMatchingFilter.add(event);
             }
 
@@ -119,14 +117,14 @@ public class WhatEventHomepageController implements Initializable {
 
         for (Event event : WhatEventApp.getEvents()) {
 
-            if (event.getLocation().equals(location)){
+            if (event.getLocation().equals(location)) {
                 eventsMatchingFilter.add(event);
             }
         }
         return eventsMatchingFilter;
     }
 
-    private String generateStringToOutput(ArrayList<Event>filteredArray){
+    private String generateStringToOutput(ArrayList<Event> filteredArray) {
 
         StringBuilder stringBuilder = new StringBuilder();
 

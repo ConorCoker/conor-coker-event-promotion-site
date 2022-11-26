@@ -4,8 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,11 +49,19 @@ public class OrganiserPageController implements Initializable {
     @FXML
     private DatePicker datePicker;
 
+    @FXML
+    private ImageView imageView;
+
+    @FXML
+    private Button buttonUploadImage;
+
     private Organiser loggedInOrganiser;
 
     private final Utilities utils = new Utilities();
 
     private int eventId;
+
+    private Image image;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -108,13 +120,28 @@ public class OrganiserPageController implements Initializable {
     }
 
     @FXML
+    void uploadAnImageOnClick() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose an image");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+        File selectedFile = fileChooser.showOpenDialog(WhatEventApp.getMainStage());
+        if (selectedFile != null) {
+            Image image = new Image(selectedFile.getAbsolutePath());
+            imageView.setImage(image);
+            this.image = image;
+        } else {
+            textOutput.setText("Error uploading image please try again!");
+        }
+    }
+
+    @FXML
     void buttonUpdateDetailsOnClick() {
 
         if (!textFieldInputBox.getText().isBlank()) {
 
             eventId = Integer.parseInt(textFieldInputBox.getText());
 
-            if (utils.checkAreAllTextFieldsFilled(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice) && datePicker.hasProperties()) {
+            if (utils.checkAreAllTextFieldsFilled(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice) && !datePicker.getEditor().getText().isBlank()) {
 
                 utils.getEventById(eventId).setTitle(textFieldEventTitle.getText());
                 utils.getEventById(eventId).setDescription(textFieldEventDescription.getText());
@@ -123,11 +150,14 @@ public class OrganiserPageController implements Initializable {
                 utils.getEventById(eventId).setVenue(textFieldEventVenue.getText());
                 utils.getEventById(eventId).setPrice(textFieldTicketPrice.getText());
                 utils.getEventById(eventId).setDate(datePicker.getValue().toString());
+                utils.getEventById(eventId).setImage(imageView.getImage());
                 textOutput.setText("Event Updated!");
-                utils.clearTextFields(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice,datePicker.getEditor(), textFieldInputBox);
+                utils.clearTextFields(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice, datePicker.getEditor(), textFieldInputBox);
+                imageView.setImage(null);
                 buttonRegisterEvent.setDisable(false);
             } else {
                 textOutput.setText("Change Event Details Above!");
+                buttonUploadImage.setText("Change/Add Image?");
                 textFieldEventTitle.setText(utils.getEventById(eventId).getTitle());
                 textFieldEventDescription.setText(utils.getEventById(eventId).getDescription());
                 choiceBoxEventType.setValue(utils.getEventById(eventId).getType());
@@ -135,6 +165,7 @@ public class OrganiserPageController implements Initializable {
                 textFieldEventVenue.setText(utils.getEventById(eventId).getVenue());
                 textFieldTicketPrice.setText(utils.getEventById(eventId).getPrice());
                 datePicker.getEditor().setText(utils.getEventById(eventId).getDate());
+                imageView.setImage(utils.getEventById(eventId).getImage());
                 buttonRegisterEvent.setDisable(true);
             }
         } else {
@@ -146,23 +177,34 @@ public class OrganiserPageController implements Initializable {
     private void createEvent() {
         if (requiredFieldsEntered()) {
             WhatEventApp.getEvents().add(new Event(loggedInOrganiser, textFieldEventTitle.getText(), textFieldEventDescription.getText(),
-                    textFieldEventVenue.getText(), textFieldTicketPrice.getText(),datePicker.getValue().toString()));
+                    textFieldEventVenue.getText(), textFieldTicketPrice.getText(), datePicker.getValue().toString()));
             WhatEventApp.getEvents().get(WhatEventApp.getEvents().size() - 1).setType(choiceBoxEventType.getValue());
             WhatEventApp.getEvents().get(WhatEventApp.getEvents().size() - 1).setLocation(choiceBoxEventLocation.getValue());
-            utils.clearTextFields(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice,datePicker.getEditor());
+            if (checkIsUserUploadingAnImage()) {
+                WhatEventApp.getEvents().get(WhatEventApp.getEvents().size() - 1).setImage(image);
+                this.image = null;
+            }
+            utils.clearTextFields(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice, datePicker.getEditor());
+            imageView.setImage(null);
         } else {
             textOutput.setText("Please Enter All Required Fields!");
         }
     }
 
-    private boolean requiredFieldsEntered() {
-        return !textFieldEventTitle.getText().isBlank() && !textFieldEventDescription.getText().isBlank() &&
-                !textFieldTicketPrice.getText().isBlank() && !textFieldEventVenue.getText().isBlank() && datePicker!=null;
+    private boolean checkIsUserUploadingAnImage() {
+        return image != null;
     }
 
-    public void setupCheckBoxes() {
+
+    private boolean requiredFieldsEntered() {
+        return !textFieldEventTitle.getText().isBlank() && !textFieldEventDescription.getText().isBlank() &&
+                !textFieldTicketPrice.getText().isBlank() && !textFieldEventVenue.getText().isBlank() && !datePicker.getEditor().getText().isBlank();
+    }
+
+    private void setupCheckBoxes() {
         choiceBoxEventLocation = utils.fillAndReturnChoiceBoxes(choiceBoxEventLocation, "locations");
         choiceBoxEventType = utils.fillAndReturnChoiceBoxes(choiceBoxEventType, "types");
     }
+
 }
 

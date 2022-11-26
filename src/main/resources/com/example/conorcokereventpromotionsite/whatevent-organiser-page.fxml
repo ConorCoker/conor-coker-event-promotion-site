@@ -6,6 +6,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -41,13 +42,16 @@
                   <ChoiceBox fx:id="choiceBoxEventLocation" layoutX="370.0" layoutY="106.0" prefWidth="150.0" />
                   <TextField fx:id="textFieldEventVenue" layoutX="370.0" layoutY="137.0" />
                   <TextField fx:id="textFieldTicketPrice" layoutX="370.0" layoutY="165.0" />
-                  <Button fx:id="buttonRegisterEvent" layoutX="428.0" layoutY="222.0" mnemonicParsing="false" onAction="#buttonRegisterEventOnClick" text="Register Event" />
-                  <TextField fx:id="textFieldInputBox" layoutX="262.0" layoutY="222.0" />
-                  <Button layoutX="262.0" layoutY="247.0" mnemonicParsing="false" onAction="#buttonDisplayDetailsOnClick" text="Display Details" />
-                  <Button fx:id="buttonUpdate" layoutX="355.0" layoutY="247.0" mnemonicParsing="false" onAction="#buttonUpdateDetailsOnClick" text="Update Details" />
-                  <Text fx:id="textOutput" fill="RED" layoutX="402.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Button fx:id="buttonRegisterEvent" layoutX="428.0" layoutY="255.0" mnemonicParsing="false" onAction="#buttonRegisterEventOnClick" text="Register Event" />
+                  <TextField fx:id="textFieldInputBox" layoutX="263.0" layoutY="255.0" />
+                  <Button layoutX="263.0" layoutY="281.0" mnemonicParsing="false" onAction="#buttonDisplayDetailsOnClick" text="Display Details" />
+                  <Button fx:id="buttonUpdate" layoutX="355.0" layoutY="281.0" mnemonicParsing="false" onAction="#buttonUpdateDetailsOnClick" text="Update Details" />
+                  <Text fx:id="textOutput" fill="RED" layoutX="449.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="138.66666666666674" />
                   <DatePicker fx:id="datePicker" layoutX="370.0" layoutY="193.0" prefHeight="25.0" prefWidth="149.0" />
                   <Text layoutX="271.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Event*" />
+                  <Button fx:id="buttonUploadImage" layoutX="370.0" layoutY="223.0" mnemonicParsing="false" onAction="#uploadAnImageOnClick" text="Upload an Image" />
+                  <Text layoutX="283.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event Image" />
+                  <ImageView fx:id="imageView" fitHeight="77.0" fitWidth="77.0" layoutX="520.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </AnchorPane>
         </items>
