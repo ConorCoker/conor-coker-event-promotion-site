@@ -3,10 +3,7 @@ package com.example.conorcokereventpromotionsite;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -44,6 +41,9 @@ public class OrganiserPageController implements Initializable {
 
     @FXML
     private Button buttonRegisterEvent;
+
+    @FXML
+    private DatePicker datePicker;
 
     private Organiser loggedInOrganiser;
 
@@ -114,7 +114,7 @@ public class OrganiserPageController implements Initializable {
 
             eventId = Integer.parseInt(textFieldInputBox.getText());
 
-            if (utils.checkAreAllTextFieldsFilled(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice)) {
+            if (utils.checkAreAllTextFieldsFilled(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice) && datePicker.hasProperties()) {
 
                 utils.getEventById(eventId).setTitle(textFieldEventTitle.getText());
                 utils.getEventById(eventId).setDescription(textFieldEventDescription.getText());
@@ -122,9 +122,9 @@ public class OrganiserPageController implements Initializable {
                 utils.getEventById(eventId).setLocation(choiceBoxEventLocation.getValue());
                 utils.getEventById(eventId).setVenue(textFieldEventVenue.getText());
                 utils.getEventById(eventId).setPrice(textFieldTicketPrice.getText());
-
+                utils.getEventById(eventId).setDate(datePicker.getValue().toString());
                 textOutput.setText("Event Updated!");
-                utils.clearTextFields(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice,textFieldInputBox);
+                utils.clearTextFields(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice,datePicker.getEditor(), textFieldInputBox);
                 buttonRegisterEvent.setDisable(false);
             } else {
                 textOutput.setText("Change Event Details Above!");
@@ -134,6 +134,7 @@ public class OrganiserPageController implements Initializable {
                 choiceBoxEventLocation.setValue(utils.getEventById(eventId).getLocation());
                 textFieldEventVenue.setText(utils.getEventById(eventId).getVenue());
                 textFieldTicketPrice.setText(utils.getEventById(eventId).getPrice());
+                datePicker.getEditor().setText(utils.getEventById(eventId).getDate());
                 buttonRegisterEvent.setDisable(true);
             }
         } else {
@@ -145,10 +146,10 @@ public class OrganiserPageController implements Initializable {
     private void createEvent() {
         if (requiredFieldsEntered()) {
             WhatEventApp.getEvents().add(new Event(loggedInOrganiser, textFieldEventTitle.getText(), textFieldEventDescription.getText(),
-                    textFieldEventVenue.getText(), textFieldTicketPrice.getText()));
+                    textFieldEventVenue.getText(), textFieldTicketPrice.getText(),datePicker.getValue().toString()));
             WhatEventApp.getEvents().get(WhatEventApp.getEvents().size() - 1).setType(choiceBoxEventType.getValue());
             WhatEventApp.getEvents().get(WhatEventApp.getEvents().size() - 1).setLocation(choiceBoxEventLocation.getValue());
-            utils.clearTextFields(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice);
+            utils.clearTextFields(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice,datePicker.getEditor());
         } else {
             textOutput.setText("Please Enter All Required Fields!");
         }
@@ -156,7 +157,7 @@ public class OrganiserPageController implements Initializable {
 
     private boolean requiredFieldsEntered() {
         return !textFieldEventTitle.getText().isBlank() && !textFieldEventDescription.getText().isBlank() &&
-                !textFieldTicketPrice.getText().isBlank() && !textFieldEventVenue.getText().isBlank();
+                !textFieldTicketPrice.getText().isBlank() && !textFieldEventVenue.getText().isBlank() && datePicker!=null;
     }
 
     public void setupCheckBoxes() {

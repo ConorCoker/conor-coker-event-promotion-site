@@ -1,6 +1,7 @@
 package com.example.conorcokereventpromotionsite;
 
-import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 public class Event{
@@ -13,14 +14,17 @@ public class Event{
     private String price;
     private final Organiser organiser;
     private int eventId;
+    private final Calendar calendar = Calendar.getInstance();
+    String date;
 
-    public Event(Organiser organiser, String title, String description, String venue, String price) {
+    public Event(Organiser organiser, String title, String description, String venue, String price,String date) {
 
         this.organiser = organiser;
         this.title = title;
         this.description = description;
         this.venue = venue;
         this.price = price;
+        this.date=date;
         Random random = new Random();
         do {
             eventId = random.nextInt(200) + 2000;
@@ -87,6 +91,14 @@ public class Event{
         return eventId;
     }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
     public boolean isEventIdUnique(int eventId) {
 
         boolean isUnique = true;
@@ -110,6 +122,7 @@ public class Event{
                 "Location - " + location + " \n" +
                 "Venue - " + venue + " \n" +
                 "Price - €" + price + " \n" +
+                "Date - "+ date + "\n" +
                 "Organised by - " + organiser.getName();
     }
 }
