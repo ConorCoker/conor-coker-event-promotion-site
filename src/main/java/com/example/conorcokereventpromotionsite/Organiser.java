@@ -1,9 +1,9 @@
 package com.example.conorcokereventpromotionsite;
 
-import java.io.Serializable;
+
 import java.util.Random;
 
-public class Organiser{
+public class Organiser {
 
     private final String name;
     private final String email;
@@ -48,22 +48,26 @@ public class Organiser{
             this.phone = phone;
         }
     }
+
     public void setWebsite(String website) {
         if (!website.isBlank()) {
             this.website = website;
         }
     }
+
     public void setSocialMedia1(String socialMedia1) {
         if (!socialMedia1.isBlank()) {
             this.socialMedia1 = socialMedia1;
         }
     }
+
     public void setSocialMedia2(String socialMedia2) {
         if (!socialMedia2.isBlank()) {
             this.socialMedia2 = socialMedia2;
         }
 
     }
+
     public int getOrganiserId() {
         return organiserId;
     }
@@ -87,5 +91,8 @@ public class Organiser{
         return true;
     }
 
-
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -4,7 +4,8 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -41,10 +42,17 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <TextArea fx:id="showEventsTextArea" layoutY="68.0" prefHeight="332.0" prefWidth="600.0">
-         <font>
-            <Font name="Elephant" size="12.0" />
-         </font></TextArea>
       <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="386.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
+      <TableView fx:id="tableView" layoutX="31.0" layoutY="67.0" prefHeight="333.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="67.0">
+        <columns>
+          <TableColumn fx:id="imageTableColumn" prefWidth="88.66665649414062" text="Image" />
+          <TableColumn fx:id="nameTableColumn" minWidth="0.0" prefWidth="94.0" text="Name" />
+            <TableColumn fx:id="typeTableColumn" minWidth="0.0" prefWidth="95.33331298828125" text="Type" />
+            <TableColumn fx:id="locationTableColumn" minWidth="0.0" prefWidth="81.3333740234375" text="Location" />
+            <TableColumn fx:id="priceTableColumn" minWidth="0.0" prefWidth="75.3333740234375" text="Price" />
+            <TableColumn fx:id="organiserTableColumn" minWidth="0.0" prefWidth="63.33331298828125" text="Organiser" />
+            <TableColumn fx:id="dateTableColumn" minWidth="0.0" prefWidth="99.33331298828125" text="Date" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

@@ -1,6 +1,7 @@
 package com.example.conorcokereventpromotionsite;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.Random;
 
@@ -16,6 +17,8 @@ public class Event {
     private int eventId;
     private String date;
     private Image image;
+    private String imageFileLocation;
+    private ImageView imageView;
 
 
     public Event(Organiser organiser, String title, String description, String venue, String price, String date) {
@@ -30,6 +33,9 @@ public class Event {
         do {
             eventId = random.nextInt(200) + 2000;
         } while (!isEventIdUnique(eventId));
+        if (image!=null){
+            imageView.setImage(image);
+        }
     }
 
     public Organiser getOrganiser() {
@@ -119,6 +125,14 @@ public class Event {
         this.image = image;
 
 
+    }
+
+    public void setImageFileLocation(String imageFileLocation) {
+        this.imageFileLocation = imageFileLocation;
+    }
+
+    public String getImageFileLocation(){
+        return imageFileLocation;
     }
 
     public Image getImage() {

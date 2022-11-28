@@ -5,9 +5,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
@@ -27,13 +27,72 @@ public class WhatEventHomepageController implements Initializable {
     private Label labelNumOfOrganisers;
 
     @FXML
-    private TextArea showEventsTextArea;
+    private TableView<Event> tableView;
+
+    @FXML
+    private TableColumn<Event, Image> imageTableColumn;
+
+    @FXML
+    private TableColumn<Event, String> nameTableColumn;
+
+    @FXML
+    private TableColumn<Event, String> typeTableColumn;
+
+    @FXML
+    private TableColumn<Event, String> locationTableColumn;
+
+    @FXML
+    private TableColumn<Event, String> priceTableColumn;
+
+    @FXML
+    private TableColumn<Event, Organiser> organiserTableColumn;
+
+    @FXML
+    private TableColumn<Event, String> dateTableColumn;
 
     private final Utilities utils = new Utilities();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        labelNumOfOrganisers.setText("Number of Organisers Registered = " + RegistrationPageController.getNumberOfUsers());
+        fillCheckboxes();
+        setupTable();
+
+
+    }
+
+    private void setupTable() {
+        ObservableList<Event> observableListOfEvents = FXCollections.observableArrayList(WhatEventApp.getEvents());
+
+        imageTableColumn.setCellFactory(param -> {
+            final ImageView imageView = new ImageView();
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+            TableCell<Event, Image> cell = new TableCell<Event, Image>() {
+                public void updateItem(Image item, boolean empty) {
+                    if (item != null) {
+                        imageView.setImage(item);
+                    }
+                }
+            };
+            cell.setGraphic(imageView);
+            return cell;
+        });
+
+        imageTableColumn.setCellValueFactory(new PropertyValueFactory<>("image"));
+        nameTableColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        typeTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        locationTableColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        priceTableColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        organiserTableColumn.setCellValueFactory(new PropertyValueFactory<>("organiser"));
+        dateTableColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        imageTableColumn.setGraphic(new ImageView());
+
+        tableView.setItems(observableListOfEvents);
+    }
+
+    private void fillCheckboxes() {
         ObservableList<String> areas = FXCollections.observableArrayList("Any Area", "Waterford", "Kilkenny", "Galway", "Dublin", "Limerick");
         eventLocationChoiceBox.setItems(areas);
         eventLocationChoiceBox.setValue("Any Area");
@@ -41,16 +100,6 @@ public class WhatEventHomepageController implements Initializable {
         ObservableList<String> types = FXCollections.observableArrayList("Any Category", "Music", "Drama", "Poetry", "Comedy", "Entertainment", "Educational");
         eventCategoryChoiceBox.setItems(types);
         eventCategoryChoiceBox.setValue("Any Category");
-
-        labelNumOfOrganisers.setText("Number of Organisers Registered = " + RegistrationPageController.getNumberOfUsers());
-
-        if (WhatEventApp.getEvents().isEmpty()) {
-            showEventsTextArea.setText(utils.getWelcomeText());
-        } else {
-            showEventsTextArea.setText(generateStringToOutput(WhatEventApp.getEvents()));
-        }
-
-
     }
 
     @FXML
@@ -66,19 +115,19 @@ public class WhatEventHomepageController implements Initializable {
         utils.switchScreen(event, "whatevent-registration-page.fxml", "What Event Ireland - Registration");
     }
 
-    @FXML
-    void buttonFindOnClick() {
-
-        if (eventCategoryChoiceBox.getValue().equals("Any Category") && !eventLocationChoiceBox.getValue().equals("Any Area")) {
-            showEventsTextArea.setText(generateStringToOutput(filterEventsByLocation(eventLocationChoiceBox.getValue())));
-        } else if (!eventCategoryChoiceBox.getValue().equals("Any Category") && eventLocationChoiceBox.getValue().equals("Any Area")) {
-            showEventsTextArea.setText(generateStringToOutput(filterEventsByCategory(eventCategoryChoiceBox.getValue())));
-        } else if (!eventLocationChoiceBox.getValue().equals("Any Area") && !eventCategoryChoiceBox.getValue().equals("Any Category")) {
-            showEventsTextArea.setText(generateStringToOutput(filterEventsByCategoryAndLocation(eventCategoryChoiceBox.getValue(), eventLocationChoiceBox.getValue())));
-        } else {
-            showEventsTextArea.setText(generateStringToOutput(WhatEventApp.getEvents()));
-        }
-    }
+//    @FXML
+//    void buttonFindOnClick() {
+//
+//        if (eventCategoryChoiceBox.getValue().equals("Any Category") && !eventLocationChoiceBox.getValue().equals("Any Area")) {
+//            showEventsTextArea.setText(generateStringToOutput(filterEventsByLocation(eventLocationChoiceBox.getValue())));
+//        } else if (!eventCategoryChoiceBox.getValue().equals("Any Category") && eventLocationChoiceBox.getValue().equals("Any Area")) {
+//            showEventsTextArea.setText(generateStringToOutput(filterEventsByCategory(eventCategoryChoiceBox.getValue())));
+//        } else if (!eventLocationChoiceBox.getValue().equals("Any Area") && !eventCategoryChoiceBox.getValue().equals("Any Category")) {
+//            showEventsTextArea.setText(generateStringToOutput(filterEventsByCategoryAndLocation(eventCategoryChoiceBox.getValue(), eventLocationChoiceBox.getValue())));
+//        } else {
+//            showEventsTextArea.setText(generateStringToOutput(WhatEventApp.getEvents()));
+//        }
+//    }
 
     private ArrayList<Event> filterEventsByCategoryAndLocation(String category, String location) {
 

@@ -62,6 +62,7 @@ public class OrganiserPageController implements Initializable {
     private int eventId;
 
     private Image image;
+    private String imageFileLocation;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -129,6 +130,7 @@ public class OrganiserPageController implements Initializable {
             Image image = new Image(selectedFile.getAbsolutePath());
             imageView.setImage(image);
             this.image = image;
+            imageFileLocation = selectedFile.getAbsolutePath();
         } else {
             textOutput.setText("Error uploading image please try again!");
         }
@@ -182,7 +184,9 @@ public class OrganiserPageController implements Initializable {
             WhatEventApp.getEvents().get(WhatEventApp.getEvents().size() - 1).setLocation(choiceBoxEventLocation.getValue());
             if (checkIsUserUploadingAnImage()) {
                 WhatEventApp.getEvents().get(WhatEventApp.getEvents().size() - 1).setImage(image);
+                WhatEventApp.getEvents().get(WhatEventApp.getEvents().size()-1).setImageFileLocation(imageFileLocation);
                 this.image = null;
+                imageFileLocation = null;
             }
             utils.clearTextFields(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice, datePicker.getEditor());
             imageView.setImage(null);
