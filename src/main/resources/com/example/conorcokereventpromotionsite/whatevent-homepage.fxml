@@ -36,8 +36,10 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="registerButton" layoutX="23.0" layoutY="20.0" mnemonicParsing="false" onAction="#registerButtonOnClick" text="Register" />
-                  <Button fx:id="loginButton" layoutX="99.0" layoutY="20.0" mnemonicParsing="false" onAction="#loginButtonOnClick" prefHeight="25.0" prefWidth="59.0" text="Login" />
+                  <Button fx:id="registerButton" layoutX="22.0" layoutY="7.0" mnemonicParsing="false" onAction="#registerButtonOnClick" text="Register" />
+                  <Button fx:id="loginButton" layoutX="90.0" layoutY="7.0" mnemonicParsing="false" onAction="#loginButtonOnClick" prefHeight="25.0" prefWidth="59.0" text="Login" />
+                  <Button layoutX="39.0" layoutY="38.0" mnemonicParsing="false" onAction="#buttonLoadOnClick" text="Load" />
+                  <Button layoutX="90.0" layoutY="38.0" mnemonicParsing="false" onAction="#buttonSaveOnClick" prefHeight="25.0" prefWidth="59.0" text="Save" />
                </children>
             </AnchorPane>
         </items>

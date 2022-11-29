@@ -184,7 +184,7 @@ public class OrganiserPageController implements Initializable {
             WhatEventApp.getEvents().get(WhatEventApp.getEvents().size() - 1).setLocation(choiceBoxEventLocation.getValue());
             if (checkIsUserUploadingAnImage()) {
                 WhatEventApp.getEvents().get(WhatEventApp.getEvents().size() - 1).setImage(image);
-                WhatEventApp.getEvents().get(WhatEventApp.getEvents().size()-1).setImageFileLocation(imageFileLocation);
+                WhatEventApp.getEvents().get(WhatEventApp.getEvents().size() - 1).setImageFileLocation(imageFileLocation);
                 this.image = null;
                 imageFileLocation = null;
             }

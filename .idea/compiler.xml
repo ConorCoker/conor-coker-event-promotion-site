@@ -15,7 +15,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="conor-coker-event-promotion-site" options="--add-exports jdk.jfr/jdk.jfr.internal.jfc.model=com.example.conorcokereventpromotionsite" />
+      <module name="conor-coker-event-promotion-site" options="" />
     </option>
   </component>
 </project>

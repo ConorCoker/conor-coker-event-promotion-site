@@ -1,11 +1,11 @@
 package com.example.conorcokereventpromotionsite;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Event {
+public class Event implements Serializable {
 
     private String title;
     private String description;
@@ -16,10 +16,8 @@ public class Event {
     private final Organiser organiser;
     private int eventId;
     private String date;
-    private Image image;
+    private transient Image image;
     private String imageFileLocation;
-    private ImageView imageView;
-
 
     public Event(Organiser organiser, String title, String description, String venue, String price, String date) {
 
@@ -33,9 +31,6 @@ public class Event {
         do {
             eventId = random.nextInt(200) + 2000;
         } while (!isEventIdUnique(eventId));
-        if (image!=null){
-            imageView.setImage(image);
-        }
     }
 
     public Organiser getOrganiser() {
@@ -125,18 +120,20 @@ public class Event {
         this.image = image;
 
 
+
+    }
+
+    public Image getImage() {
+
+        return image;
+    }
+
+    public String getImageFileLocation() {
+        return imageFileLocation;
     }
 
     public void setImageFileLocation(String imageFileLocation) {
         this.imageFileLocation = imageFileLocation;
-    }
-
-    public String getImageFileLocation(){
-        return imageFileLocation;
-    }
-
-    public Image getImage() {
-        return image;
     }
 
     @Override

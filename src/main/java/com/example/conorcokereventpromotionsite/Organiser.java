@@ -1,9 +1,10 @@
 package com.example.conorcokereventpromotionsite;
 
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Organiser {
+public class Organiser implements Serializable {
 
     private final String name;
     private final String email;
