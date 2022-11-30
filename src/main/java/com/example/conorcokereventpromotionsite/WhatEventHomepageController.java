@@ -4,11 +4,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -137,6 +142,11 @@ public class WhatEventHomepageController implements Initializable {
         repopulateImages();
     }
 
+    @FXML
+    void mouseClickedOnTableListener(MouseEvent mouseEvent) throws IOException {
+        handleTableClicks(mouseEvent);
+    }
+
     private void filterEventsByCategoryAndLocation(String category, String location) {
 
         ObservableList<Event> eventsMatchingFilter = FXCollections.observableArrayList();
@@ -181,9 +191,25 @@ public class WhatEventHomepageController implements Initializable {
 
     private void repopulateImages() {
         for (Event event : WhatEventApp.getEvents()) {
-            event.setImage(new Image(event.getImageFileLocation()));
+          if (!event.getImageFileLocation().equals("no image")){
+              event.setImage(new Image(event.getImageFileLocation()));
+
+          }
         }
 
+    }
+
+    private void handleTableClicks(MouseEvent mouseEvent) throws IOException {
+
+        if (tableView.getSelectionModel().getSelectedItem()!=null){
+            tableView.getSelectionModel().getSelectedItem().setInDepthView(true);
+            Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(WhatEventApp.class.getResource("whatevent-event-details-indepth.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            stage.setTitle("More Details");
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
 

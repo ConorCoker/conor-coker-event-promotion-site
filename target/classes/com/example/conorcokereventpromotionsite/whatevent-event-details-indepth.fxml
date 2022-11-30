@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.conorcokereventpromotionsite.EventDetailsInDepthController">
+   <children>
+      <TextArea fx:id="textAreaEventDetails" layoutX="181.0" layoutY="45.0" prefHeight="355.0" prefWidth="419.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="181.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0" />
+      <Text fx:id="textEventNameHeading" layoutX="249.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font name="Elephant" size="18.0" />
+         </font>
+      </Text>
+      <Button layoutX="534.0" layoutY="12.0" mnemonicParsing="false" onAction="#buttonBackOnClick" text="Back" />
+      <ImageView fx:id="imageViewEventImage" fitHeight="150.0" fitWidth="155.0" layoutX="14.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>

@@ -45,7 +45,7 @@
         </items>
       </SplitPane>
       <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="386.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
-      <TableView fx:id="tableView" layoutX="31.0" layoutY="67.0" prefHeight="333.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="67.0">
+      <TableView fx:id="tableView" layoutX="31.0" layoutY="67.0" onMouseClicked="#mouseClickedOnTableListener" prefHeight="333.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="67.0">
         <columns>
           <TableColumn fx:id="imageTableColumn" prefWidth="88.66665649414062" text="Image" />
           <TableColumn fx:id="nameTableColumn" minWidth="0.0" prefWidth="94.0" text="Name" />

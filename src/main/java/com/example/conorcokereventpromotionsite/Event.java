@@ -17,7 +17,8 @@ public class Event implements Serializable {
     private int eventId;
     private String date;
     private transient Image image;
-    private String imageFileLocation;
+    private String imageFileLocation = "no image";
+    private boolean isInDepthView = false;
 
     public Event(Organiser organiser, String title, String description, String venue, String price, String date) {
 
@@ -126,6 +127,14 @@ public class Event implements Serializable {
     public Image getImage() {
 
         return image;
+    }
+
+    public boolean isInDepthView() {
+        return isInDepthView;
+    }
+
+    public void setInDepthView(boolean inDepthView) {
+        isInDepthView = inDepthView;
     }
 
     public String getImageFileLocation() {
