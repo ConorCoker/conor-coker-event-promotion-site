@@ -110,7 +110,7 @@ public class OrganiserPageController implements Initializable {
             StringBuilder stringToPrint = new StringBuilder();
 
             for (Event event : WhatEventApp.getEvents()) {
-                if (event.getOrganiser().equals(loggedInOrganiser)) {
+                if (event.getOrganiser().getOrganiserId() == loggedInOrganiser.getOrganiserId()) {
                     stringToPrint.append(event.getEventId()).append(": ").append(event.getTitle()).append("\n\n");
                 }
             }
@@ -141,35 +141,47 @@ public class OrganiserPageController implements Initializable {
 
         if (!textFieldInputBox.getText().isBlank()) {
 
-            eventId = Integer.parseInt(textFieldInputBox.getText());
+            if (utils.getEventById(Integer.parseInt(textFieldInputBox.getText())) != null) {
 
-            if (utils.checkAreAllTextFieldsFilled(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice) && !datePicker.getEditor().getText().isBlank()) {
+                eventId = Integer.parseInt(textFieldInputBox.getText());
 
-                utils.getEventById(eventId).setTitle(textFieldEventTitle.getText());
-                utils.getEventById(eventId).setDescription(textFieldEventDescription.getText());
-                utils.getEventById(eventId).setType(choiceBoxEventType.getValue());
-                utils.getEventById(eventId).setLocation(choiceBoxEventLocation.getValue());
-                utils.getEventById(eventId).setVenue(textFieldEventVenue.getText());
-                utils.getEventById(eventId).setPrice(textFieldTicketPrice.getText());
-                utils.getEventById(eventId).setDate(datePicker.getValue().toString());
-                utils.getEventById(eventId).setImage(imageView.getImage());
-                textOutput.setText("Event Updated!");
-                utils.clearTextFields(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice, datePicker.getEditor(), textFieldInputBox);
-                imageView.setImage(null);
-                buttonRegisterEvent.setDisable(false);
-            } else {
-                textOutput.setText("Change Event Details Above!");
-                buttonUploadImage.setText("Change/Add Image?");
-                textFieldEventTitle.setText(utils.getEventById(eventId).getTitle());
-                textFieldEventDescription.setText(utils.getEventById(eventId).getDescription());
-                choiceBoxEventType.setValue(utils.getEventById(eventId).getType());
-                choiceBoxEventLocation.setValue(utils.getEventById(eventId).getLocation());
-                textFieldEventVenue.setText(utils.getEventById(eventId).getVenue());
-                textFieldTicketPrice.setText(utils.getEventById(eventId).getPrice());
-                datePicker.getEditor().setText(utils.getEventById(eventId).getDate());
-                imageView.setImage(utils.getEventById(eventId).getImage());
-                buttonRegisterEvent.setDisable(true);
+                if (utils.getEventById(eventId).getOrganiser().getOrganiserId()==loggedInOrganiser.getOrganiserId()) {
+
+                    if (utils.checkAreAllTextFieldsFilled(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice) && !datePicker.getEditor().getText().isBlank()) {
+                        utils.getEventById(eventId).setTitle(textFieldEventTitle.getText());
+                        utils.getEventById(eventId).setDescription(textFieldEventDescription.getText());
+                        utils.getEventById(eventId).setType(choiceBoxEventType.getValue());
+                        utils.getEventById(eventId).setLocation(choiceBoxEventLocation.getValue());
+                        utils.getEventById(eventId).setVenue(textFieldEventVenue.getText());
+                        utils.getEventById(eventId).setPrice(textFieldTicketPrice.getText());
+                        utils.getEventById(eventId).setDate(datePicker.getValue().toString());
+                        utils.getEventById(eventId).setImage(imageView.getImage());
+                        textOutput.setText("Event Updated!");
+                        utils.clearTextFields(textFieldEventTitle, textFieldEventDescription, textFieldEventVenue, textFieldTicketPrice, datePicker.getEditor(), textFieldInputBox);
+                        imageView.setImage(null);
+                        buttonRegisterEvent.setDisable(false);
+                    } else {
+                        textOutput.setText("Change Event Details Above!");
+                        buttonUploadImage.setText("Change/Add Image?");
+                        textFieldEventTitle.setText(utils.getEventById(eventId).getTitle());
+                        textFieldEventDescription.setText(utils.getEventById(eventId).getDescription());
+                        choiceBoxEventType.setValue(utils.getEventById(eventId).getType());
+                        choiceBoxEventLocation.setValue(utils.getEventById(eventId).getLocation());
+                        textFieldEventVenue.setText(utils.getEventById(eventId).getVenue());
+                        textFieldTicketPrice.setText(utils.getEventById(eventId).getPrice());
+                        imageView.setImage(utils.getEventById(eventId).getImage());
+                        buttonRegisterEvent.setDisable(true);
+                    }
+                }
+                else{
+                    textOutput.setText("You dont have permission to change this event!");
+                }
             }
+            else{
+                textOutput.setText("Please enter a valid Event ID!");
+            }
+
+
         } else {
             textOutput.setText("Please Enter an Event ID!");
         }

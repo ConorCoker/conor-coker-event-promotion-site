@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,9 +27,6 @@ public class WhatEventHomepageController implements Initializable {
 
     @FXML
     private ChoiceBox<String> eventLocationChoiceBox;
-
-    @FXML
-    private Label labelNumOfOrganisers;
 
     @FXML
     private TableView<Event> tableView;
@@ -49,10 +47,10 @@ public class WhatEventHomepageController implements Initializable {
     private TableColumn<Event, String> priceTableColumn;
 
     @FXML
-    private TableColumn<Event, Organiser> organiserTableColumn;
+    private TableColumn<Event, String> dateTableColumn;
 
     @FXML
-    private TableColumn<Event, String> dateTableColumn;
+    private Text textOutput;
 
     private ObservableList<Event> observableListOfEvents;
 
@@ -63,7 +61,7 @@ public class WhatEventHomepageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         observableListOfEvents = FXCollections.observableArrayList(WhatEventApp.getEvents());
-        labelNumOfOrganisers.setText("Number of Organisers Registered = " + RegistrationPageController.getNumberOfUsers());
+        textOutput.setText("Number of Organisers Registered = " + WhatEventApp.getUsers().size());
         fillCheckboxes();
         setupTable();
     }
@@ -98,7 +96,6 @@ public class WhatEventHomepageController implements Initializable {
         typeTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         locationTableColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
         priceTableColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        organiserTableColumn.setCellValueFactory(new PropertyValueFactory<>("organiser"));
         dateTableColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         tableView.setItems(observableListOfEvents);
     }
@@ -133,13 +130,24 @@ public class WhatEventHomepageController implements Initializable {
 
     @FXML
     void buttonSaveOnClick() {
-        WhatEventApp.save();
+        try{
+            WhatEventApp.save();
+        }catch (Exception e){
+            textOutput.setText(e+" error has prevented us from saving!");
+        }
     }
 
     @FXML
-    void buttonLoadOnClick() throws IOException, ClassNotFoundException {
-        WhatEventApp.load();
-        repopulateImages();
+    void buttonLoadOnClick(){
+        try {
+            WhatEventApp.load();
+            repopulateImages();
+            textOutput.setText("Number of Organisers Registered = " + WhatEventApp.getUsers().size());
+
+        }catch (Exception e){
+            textOutput.setText(e+" error has occured!");
+        }
+
     }
 
     @FXML

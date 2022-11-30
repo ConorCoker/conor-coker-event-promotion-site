@@ -24,6 +24,9 @@ public class EventDetailsInDepthController implements Initializable {
     @FXML
     private ImageView imageViewEventImage;
 
+    @FXML
+    private TextArea textAreaOrganiserDetails;
+
     private final Utilities utils = new Utilities();
 
     @Override
@@ -32,6 +35,7 @@ public class EventDetailsInDepthController implements Initializable {
         textEventNameHeading.setText(eventToDisplay.getTitle());
         textAreaEventDetails.setText(eventToDisplay.toString());
         imageViewEventImage.setImage(eventToDisplay.getImage());
+        textAreaOrganiserDetails.setText(eventToDisplay.getOrganiser().toString());
 
     }
 

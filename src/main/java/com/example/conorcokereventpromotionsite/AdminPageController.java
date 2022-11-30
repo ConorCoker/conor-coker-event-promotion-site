@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+
 import java.io.IOException;
 
 public class AdminPageController {
@@ -28,16 +29,23 @@ public class AdminPageController {
 
         if (utils.checkAreAllTextFieldsFilled(textFieldOrganiserIdInput)) {
 
-            int organiserId = Integer.parseInt(textFieldOrganiserIdInput.getText());
-            for (Organiser o : WhatEventApp.getUsers().values()) {
+            try{
+                int organiserId = Integer.parseInt(textFieldOrganiserIdInput.getText());
+                for (Organiser o : WhatEventApp.getUsers().values()) {
 
-                if (o.getOrganiserId() == organiserId) {
-                    boolean enabledDisabledStatus=o.isEnabled();
-                    o.setEnabled(!enabledDisabledStatus);
-                    break;
+                    if (o.getOrganiserId() == organiserId) {
+                        boolean enabledDisabledStatus = o.isEnabled();
+                        o.setEnabled(!enabledDisabledStatus);
+                        break;
+                    }
                 }
+
+            }catch (NumberFormatException e){
+                textOutput.setText("Please enter a valid ID! (Numbers only)");
             }
-        }else{
+
+
+        } else {
             textOutput.setText("Please enter a Organiser ID!");
         }
     }
@@ -64,13 +72,13 @@ public class AdminPageController {
     @FXML
     void buttonListAllOrganisersOnClick() {
 
-        if (!WhatEventApp.getUsers().isEmpty()) {
+        if (WhatEventApp.getUsers().size() > 1) {
 
             StringBuilder output = new StringBuilder();
 
             for (Organiser o : WhatEventApp.getUsers().values()) {
                 if (!o.isAdmin()) {
-                    output.append(o.getName()).append(" ").append(o.getOrganiserId()).append("\n");
+                    output.append(o.getName()).append(" ").append(o.getOrganiserId()).append(". Enabled - ").append(o.isEnabled()).append("\n");
                 }
             }
             textAreaMainOutput.setText(output.toString());
@@ -85,22 +93,30 @@ public class AdminPageController {
 
         if (utils.checkAreAllTextFieldsFilled(textFieldOrganiserIdInput)) {
 
-            int organiserId = Integer.parseInt(textFieldOrganiserIdInput.getText());
-            StringBuilder stringToPrint = new StringBuilder();
+            try {
+                int organiserId = Integer.parseInt(textFieldOrganiserIdInput.getText());
+                StringBuilder stringToPrint = new StringBuilder();
 
-            for (Organiser o : WhatEventApp.getUsers().values()) {
+                for (Organiser o : WhatEventApp.getUsers().values()) {
 
-                if (o.getOrganiserId() == organiserId) {
+                    if (o.getOrganiserId() == organiserId) {
 
-                    for (Event event : WhatEventApp.getEvents()) {
-                        if (event.getOrganiser().equals(o)) {
-                            stringToPrint.append(event).append("\n");
-                            textAreaMainOutput.setText(stringToPrint.toString());
-                            textOutput.setText("");
+                        for (Event event : WhatEventApp.getEvents()) {
+                            if (event.getOrganiser().getOrganiserId()==o.getOrganiserId()) {
+                                stringToPrint.append(event).append("\n");
+                                textAreaMainOutput.setText(stringToPrint.toString());
+                                textOutput.setText("");
+                            }
                         }
                     }
                 }
+
+            } catch (NumberFormatException e) {
+                textOutput.setText("Please enter a valid ID! (Numbers only)");
+
             }
+
+
         } else {
             textOutput.setText("Please enter a Organiser ID!");
         }

@@ -9,13 +9,12 @@ public class Organiser implements Serializable {
     private final String name;
     private final String email;
     private final String password;
-    private String phone;
-    private String website;
-    private String socialMedia1;
-    private String socialMedia2;
+    private String phone = "User did not set a Phone Number";
+    private String website = "User did not set a Website";
+    private String socialMedia1 = "User did not set a Social Media";
+    private String socialMedia2 = "User did not set a Social Media";
     private int organiserId;
     private boolean isAdmin = false;
-    private boolean loggedIn = false;
     private boolean isEnabled = true;
 
     public Organiser(String name, String email, String password) {
@@ -94,6 +93,17 @@ public class Organiser implements Serializable {
 
     @Override
     public String toString() {
-        return name;
+        return "ORGANISER DETAILS - \n" +
+                "Name - " + name + " \n" +
+                "Email -  " + email + " \n" +
+                "Phone - " + phone + " \n" +
+                "Website - " + website + " \n" +
+                "Social Media 1 - " + socialMedia1 + " \n" +
+                "Social Media 2 - " + socialMedia2 + " \n" +
+                "Organiser ID - " + organiserId + "\n";
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
 import java.io.IOException;
 
 public class RegistrationPageController {
@@ -39,12 +40,6 @@ public class RegistrationPageController {
 
     private final Utilities utils = new Utilities();
 
-    private static int numberOfUsers = 0;
-
-    public static int getNumberOfUsers() {
-        return numberOfUsers;
-    }
-
     @FXML
     void exitButtonOnClick(ActionEvent event) throws IOException {
         utils.switchScreen(event, "whatevent-homepage.fxml", "What Event Ireland - Home");
@@ -58,6 +53,9 @@ public class RegistrationPageController {
             outputLabel.setText("Passwords Do Not Match!");
         } else if (!requiredFieldsEntered()) {
             outputLabel.setText("Please Enter All Required Fields!");
+        } else if (!uniqueEmail()) {
+            outputLabel.setText("Email " + emailTextfield.getText() + " is already registered in system!");
+            utils.clearTextFields(emailTextfield);
         } else if (passwordsMatch() && requiredFieldsEntered()) {
             Organiser organiser = new Organiser(nameTextfield.getText(), emailTextfield.getText(), passwordTextfield.getText());
             if (extraFieldsFilled()) {
@@ -67,16 +65,11 @@ public class RegistrationPageController {
                 organiser.setSocialMedia2(socialMedia2Textfield.getText());
             }
             if (whatEventApp.registerUser(emailTextfield.getText(), organiser)) {
-                if (!organiser.isAdmin()){
-                    numberOfUsers++;
-                }
                 utils.switchScreen(event, "whatevent-homepage.fxml", "What Event Ireland - Home");
             }
-        } else {
-            outputLabel.setText("Email " + emailTextfield.getText() + " is already registered in system!");
-            utils.clearTextFields(emailTextfield);
         }
     }
+
     private boolean passwordsMatch() {
         return passwordTextfield.getText().equals(confirmPasswordTextfield.getText());
     }
@@ -89,5 +82,15 @@ public class RegistrationPageController {
     private boolean extraFieldsFilled() {
         return !phoneTextfield.getText().isBlank() || !websiteTextfield.getText().isBlank() ||
                 !socialMedia1Textfield.getText().isBlank() || !socialMedia2Textfield.getText().isBlank();
+    }
+
+    private boolean uniqueEmail() {
+        boolean isUnique = true;
+        for (Organiser organiser : WhatEventApp.getUsers().values()) {
+            if (organiser.getEmail().equalsIgnoreCase(emailTextfield.getText())) {
+                isUnique = false;
+            }
+        }
+        return isUnique;
     }
 }
