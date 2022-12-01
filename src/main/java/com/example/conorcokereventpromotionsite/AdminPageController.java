@@ -36,6 +36,8 @@ public class AdminPageController {
                     if (o.getOrganiserId() == organiserId) {
                         boolean enabledDisabledStatus = o.isEnabled();
                         o.setEnabled(!enabledDisabledStatus);
+                        WhatEventApp.save();
+                        textOutput.setText("Success! Account Enabled Status = "+!enabledDisabledStatus);
                         break;
                     }
                 }

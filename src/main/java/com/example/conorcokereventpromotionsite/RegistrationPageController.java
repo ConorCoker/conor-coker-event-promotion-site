@@ -65,6 +65,7 @@ public class RegistrationPageController {
                 organiser.setSocialMedia2(socialMedia2Textfield.getText());
             }
             if (whatEventApp.registerUser(emailTextfield.getText(), organiser)) {
+                WhatEventApp.save();
                 utils.switchScreen(event, "whatevent-homepage.fxml", "What Event Ireland - Home");
             }
         }

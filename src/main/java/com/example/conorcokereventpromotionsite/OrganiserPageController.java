@@ -100,6 +100,7 @@ public class OrganiserPageController implements Initializable {
     void buttonRegisterEventOnClick() {
 
         createEvent();
+        WhatEventApp.save();
     }
 
     @FXML
@@ -118,6 +119,42 @@ public class OrganiserPageController implements Initializable {
         } else {
             textOutput.setText("You have No Registered Events!");
         }
+    }
+
+    @FXML
+    void buttonDeleteAccountOnClick(ActionEvent actionEvent) throws IOException {
+        if (WhatEventApp.getUsers().remove(loggedInOrganiser.getEmail())!=null){
+            WhatEventApp.getEvents().removeIf(event -> event.getOrganiser().getOrganiserId() == loggedInOrganiser.getOrganiserId());
+            WhatEventApp.save();
+            utils.switchScreen(actionEvent,"whatevent-login-page.fxml","Sorry to see you go , create a new account?");
+        }
+        else{
+            textOutput.setText("Something went wrong!");
+        }
+    }
+
+    @FXML
+    void buttonDeleteEventOnClick(){
+        try{
+            int eventIdToDelete=Integer.parseInt(textFieldInputBox.getText());
+            if (utils.getEventById(eventIdToDelete)!=null){
+                if (utils.getEventById(eventIdToDelete).getOrganiser().getOrganiserId()==loggedInOrganiser.getOrganiserId()){
+                    WhatEventApp.getEvents().remove(utils.getEventById(eventIdToDelete));
+                    textOutput.setText("Success!");
+                    WhatEventApp.save();
+                }
+                else{
+                    textOutput.setText("You are not allowed delete this event!");
+                }
+            }
+            else{
+                textOutput.setText("Cannot find event!");
+            }
+
+        }catch (NumberFormatException e){
+            textOutput.setText(e+" error has occurred!");
+        }
+
     }
 
     @FXML
@@ -220,6 +257,8 @@ public class OrganiserPageController implements Initializable {
     private void setupCheckBoxes() {
         choiceBoxEventLocation = utils.fillAndReturnChoiceBoxes(choiceBoxEventLocation, "locations");
         choiceBoxEventType = utils.fillAndReturnChoiceBoxes(choiceBoxEventType, "types");
+        choiceBoxEventType.setValue("");
+        choiceBoxEventLocation.setValue("");
     }
 
 }

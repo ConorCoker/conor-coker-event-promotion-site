@@ -52,6 +52,9 @@ public class WhatEventHomepageController implements Initializable {
     @FXML
     private Text textOutput;
 
+    @FXML
+    private Button buttonSave;
+
     private ObservableList<Event> observableListOfEvents;
 
     private final ObservableList<Event> emptyListToClearTableBeforeRefilling = FXCollections.observableArrayList();
@@ -143,9 +146,11 @@ public class WhatEventHomepageController implements Initializable {
             WhatEventApp.load();
             repopulateImages();
             textOutput.setText("Number of Organisers Registered = " + WhatEventApp.getUsers().size());
+            buttonSave.setDisable(false);
+
 
         }catch (Exception e){
-            textOutput.setText(e+" error has occured!");
+            textOutput.setText(e+" error has occurred!");
         }
 
     }

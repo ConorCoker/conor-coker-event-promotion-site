@@ -77,20 +77,4 @@ public class Utilities {
         }
         return null;
     }
-
-
-
-
-
-    public String getWelcomeText(){
-        return """
-                Hello,
-                Welcome to What Event Ireland!
-                There is currently no organisers or events in the system, you can add some and event 
-                details will appear here!
-                
-                To Login as an admin please register with name "admin" and password "admin"
-                then when you log in with those details you will be logged in as an admin.
-                """;
-    }
 }

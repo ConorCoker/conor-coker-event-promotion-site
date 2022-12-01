@@ -25,6 +25,8 @@
                         <Font name="Elephant" size="12.0" />
                      </font>
                   </Text>
+                  <Button layoutX="177.0" layoutY="35.0" mnemonicParsing="false" onAction="#buttonDeleteAccountOnClick" text="Delete Your Account" />
+                  <Text fx:id="textOutput" fill="RED" layoutX="345.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="138.66666666666674" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="105.0" prefWidth="488.0">
@@ -46,12 +48,12 @@
                   <TextField fx:id="textFieldInputBox" layoutX="263.0" layoutY="255.0" />
                   <Button layoutX="263.0" layoutY="281.0" mnemonicParsing="false" onAction="#buttonDisplayDetailsOnClick" text="Display Details" />
                   <Button fx:id="buttonUpdate" layoutX="355.0" layoutY="281.0" mnemonicParsing="false" onAction="#buttonUpdateDetailsOnClick" text="Update Details" />
-                  <Text fx:id="textOutput" fill="RED" layoutX="449.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="138.66666666666674" />
                   <DatePicker fx:id="datePicker" editable="false" layoutX="370.0" layoutY="193.0" prefHeight="25.0" prefWidth="149.0" />
                   <Text layoutX="271.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Event*" />
                   <Button fx:id="buttonUploadImage" layoutX="370.0" layoutY="223.0" mnemonicParsing="false" onAction="#uploadAnImageOnClick" text="Upload an Image" />
                   <Text layoutX="283.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event Image" />
                   <ImageView fx:id="imageView" fitHeight="77.0" fitWidth="77.0" layoutX="520.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button layoutX="449.0" layoutY="281.0" mnemonicParsing="false" onAction="#buttonDeleteEventOnClick" text="Delete Event" />
                </children>
             </AnchorPane>
         </items>
